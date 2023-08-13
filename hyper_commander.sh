@@ -16,14 +16,14 @@ printf 'Hello %s!\n\n' "$USER"
 while true; do
     print_menu
     read -r choice
-   case "$choice" in
+    case "$choice" in
         "0")
             echo 'Farewell!'
             break;;
         "1")
-            echo 'Not implemented!';;
+            echo 'host-name' "$(uname -o -n)";;
         "2")
-            echo 'Not implemented!';;
+            whoami;;
         "3")
             echo 'Not implemented!';;
         "4")
