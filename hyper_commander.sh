@@ -11,11 +11,49 @@ print_menu() {
     echo '------------------------------'
 }
 
-printf 'Hello %s!\n\n' "$USER"
+print_files_and_dirs() {
+    echo 'The list of files and directories:'
+    arr=(*)
+    for item in "${arr[@]}"; do
+        if [[ -f "$item" ]]; then
+            printf "F %s\n" "$item"
+        elif [[ -d "$item" ]]; then
+            printf "D %s\n" "$item"
+        fi
+    done
+}
 
+print_file_menu() {
+    echo '---------------------------------------------------'
+    echo "| 0 Main menu | 'up' To parent | 'name' To select |"
+    echo '---------------------------------------------------'
+}
+
+files_and_dirs() {
+    while true; do
+        print_files_and_dirs
+        echo ''
+        print_file_menu
+        read -r choice
+        case "$choice" in
+            "0")
+                break;;
+            "up")
+                echo 'Not implemented!';;
+            "$(ls "$choice" 2>/dev/null)")
+                echo 'Not implemented!';;
+            *)
+                echo 'Invalid input!';;
+        esac
+        echo ''
+    done
+}
+
+printf 'Hello %s!\n\n' "$USER"
 while true; do
     print_menu
     read -r choice
+    echo ''
     case "$choice" in
         "0")
             echo 'Farewell!'
@@ -25,7 +63,7 @@ while true; do
         "2")
             whoami;;
         "3")
-            echo 'Not implemented!';;
+            files_and_dirs;;
         "4")
             echo 'Not implemented!';;
         *)
