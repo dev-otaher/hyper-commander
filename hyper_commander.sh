@@ -29,22 +29,40 @@ print_file_menu() {
     echo '---------------------------------------------------'
 }
 
+is_file() {
+    if [ -f "$1" ]; then
+        echo 1
+    else
+        echo 0
+    fi
+}
+
+is_directory() {
+    if [ -d "$1" ]; then
+        echo 1
+    else
+        echo 0
+    fi
+} 
+
 files_and_dirs() {
     while true; do
         print_files_and_dirs
         echo ''
         print_file_menu
         read -r choice
-        case "$choice" in
-            "0")
-                break;;
-            "up")
-                echo 'Not implemented!';;
-            "$(ls "$choice" 2>/dev/null)")
-                echo 'Not implemented!';;
-            *)
-                echo 'Invalid input!';;
-        esac
+
+        if [ "$choice" = '0' ]; then
+            break
+        elif [ "$choice" = 'up' ]; then
+            cd ..
+        elif [ "$(is_file "$choice")" -eq 1 ]; then
+            echo 'Not implemented!'
+        elif [ "$(is_directory "$choice")" -eq 1 ]; then
+            cd "$choice"
+        else
+            echo 'Invalid input!'
+        fi
         echo ''
     done
 }
